@@ -83,6 +83,7 @@ parser.add_argument('url', help='facebook video url (eg. https://www.facebook.co
 parser.add_argument('-A', '--audio', help=argparse.SUPPRESS, action='store_true')
 parser.add_argument('-o', '--output', help='output filename')
 parser.add_argument('-d', '--debug', help='enable debug mode', action='store_true')
+parser.add_argument('-v', '--version', version='2022.1.0.0', action='version')
 args = parser.parse_args()
 if args.debug:
     logging.basicConfig(format='[%(asctime)s] %(message)s', datefmt='%I:%M:%S%p', level=logging.DEBUG)
