@@ -46,7 +46,7 @@ class FacebookDownloader:
                     with open(file, "wb") as f:
                         f.write(data.content)
                         f.close()
-                exit(f"Updated: Re-run program.")
+                logging.info(f"Updated: Re-run program.")
             else:
                 pass
         
@@ -82,8 +82,12 @@ parser = argparse.ArgumentParser(description='Facebook-Downloader — by Richard
 parser.add_argument('url', help='facebook video url (eg. https://www.facebook.com/PageName/videos/VideoID')
 parser.add_argument('-A', '--audio', help=argparse.SUPPRESS, action='store_true')
 parser.add_argument('-o', '--output', help='output filename')
+parser.add_argument('-d', '--debug', help='enable debug mode', action='store_true')
 args = parser.parse_args()
-logging.basicConfig(format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%I:%M:%S%p', level='NOTSET')
+if args.debug:
+    logging.basicConfig(format='[%(asctime)s] %(message)s', datefmt='%I:%M:%S%p', level=logging.DEBUG)
+else:
+    logging.basicConfig(format='[%(asctime)s] %(message)s', datefmt='%I:%M:%S%p', level=logging.INFO)
 
 if __name__ == "__main__":
     try:
@@ -93,4 +97,4 @@ if __name__ == "__main__":
         logging.warning('Process interrupted with Ctrl+C.')
 
     except Exception as e:
-        logging.error(e)
+        logging.error(f'An error occured: {e}')
