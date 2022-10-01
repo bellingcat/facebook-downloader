@@ -52,7 +52,6 @@ python downloader.py https://www.facebook.com/PageName/videos/VideoID
 |---------|:-----------:|
 | *-A/--audio* | download audio only (coming soon) |
 | *-o/--output*   | output filename |
-| *-d/--debug*   | enable debug mode |
 | *-v/--version*   | show program's version number and exit |
 
 # Donations
