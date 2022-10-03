@@ -15,12 +15,12 @@ option.add_argument('--headless')
 driver = webdriver.Firefox(options=option)
 program_version_number = "2022.1.0.0"
 downloading_url = "https://getfvid.com"
-update_check_endpoint = "https://api.github.com/repos/rly0nheart/Facebook-Downloader/releases/latest"
+update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
 
 
 def notice():
     notice_msg = f"""
-Facebook-Downloader {program_version_number} Copyright (C) 2022  Richard Mwewa
+facebook-downloader {program_version_number} Copyright (C) 2022  Richard Mwewa
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ def check_and_get_updates():
         if update_prompt.lower() == "y":
             files_to_update = ['downloader.py', 'geckodriver.exe', 'README.md', 'requirements.txt']
             for file in tqdm(files_to_update, desc=f'Updating'):
-                data = requests.get(f'https://raw.githubusercontent.com/rly0nheart/Facebook-Downloader/master/{file}')
+                data = requests.get(f'https://raw.githubusercontent.com/rly0nheart/facebook-downloader/master/{file}')
                 with open(file, "wb") as f:
                     f.write(data.content)
                     f.close()
@@ -77,7 +77,7 @@ def download_video(url, output):
     driver.close()
 
 
-parser = argparse.ArgumentParser(description='Facebook-Downloader — by Richard Mwewa')
+parser = argparse.ArgumentParser(description='facebook-downloader — by Richard Mwewa')
 parser.add_argument('url', help='facebook video url (eg. https://www.facebook.com/PageName/videos/VideoID')
 parser.add_argument('-A', '--audio', help=argparse.SUPPRESS, action='store_true')
 parser.add_argument('-o', '--output', help='output filename')
