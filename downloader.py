@@ -6,6 +6,8 @@ from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
  
 
 option = webdriver.FirefoxOptions()
@@ -63,7 +65,7 @@ def download_video(url, output):
     Audio: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a"
     """
 
-    download_btn = driver.find_element(By.XPATH, '/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a') # Find the download button (this clicks the first button which returns a video in hd)
+    download_btn = WebDriverWait(driver, 20).until(expected_conditions.presence_of_element_located((By.XPATH, '/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a'))) # Find the download button (this clicks the first button which returns a video in hd)
     download_url = download_btn.get_attribute('href')
     
     with requests.get(download_url, stream=True) as response:
