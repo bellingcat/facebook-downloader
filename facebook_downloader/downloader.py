@@ -21,7 +21,7 @@ class FacebookDownloader:
         option.add_argument('--headless')
         self.driver = webdriver.Firefox(options=option)
 
-        self.program_version_number = "2022.1.0.0"
+        self.program_version_number = "2022.1.2.0"
         self.downloading_url = "https://getfvid.com"
         self.update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
         
