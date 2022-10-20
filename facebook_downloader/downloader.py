@@ -91,3 +91,4 @@ class FacebookDownloader:
                     file.write(chunk)
                 print(f'Downloaded: {file.name}')
         self.driver.close()
+        
