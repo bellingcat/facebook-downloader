@@ -46,8 +46,17 @@ class FacebookDownloader:
         else:
             print(f"[!] A new release is available ({response['tag_name']}). Run 'pip install --upgrade facebook-downloader' to get the updates.")
 
-
+    
     def download_type(self):
+        """
+        The elements change according to what file type will be downloaded
+        So, we pass an option to specify what file type we want, by default the file is an HD video
+        """
+        """
+        HD: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a"
+        SD: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[2]/a"
+        Audio: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a"
+        """
         if self.args.audio:
             download_type_element = "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a"
         else:
@@ -71,11 +80,7 @@ class FacebookDownloader:
         url_entry_field.send_keys(Keys.ENTER) # press enter
         print('Please standby (20 seconds)...')
         self.driver.refresh
-        """
-        HD: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a"
-        SD: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[2]/a"
-        Audio: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a"
-        """
+        
         download_btn = WebDriverWait(self.driver, 20).until(expected_conditions.presence_of_element_located((By.XPATH, self.download_type()))) # Find the download button (this clicks the first button which returns a video in hd)
         download_url = download_btn.get_attribute('href')
         
