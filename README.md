@@ -9,9 +9,8 @@ pip install facebook-downloader
 ```
 
 ### Note
-> In order to run the program, You will need to have the FireFox browser installed on your pc
-> The program is dependent on selenium, so in order to run it, you will have to download and properly setup geckodriver (setup instructions available below)
->> 
+> You will need to have the FireFox browser installed on your pc
+>> The program is dependent on selenium, so in order to run it, you will have to download and properly setup geckodriver (setup instructions available below)
 
 # Geckodriver setup
 ## Linux
@@ -21,19 +20,13 @@ pip install facebook-downloader
 ```
 tar -xvzf geckodriver*
 ```
-
-**3. Make it executable**
-```
-chmod +x geckodriver
-```
-
-**4. Add geckodriver to your system path**
+**3. Add geckodriver to your system path**
 ```
 export PATH=$PATH:/path/to/downloaded/geckodriver
 ```
 
 ### Note
-> If you encounter issues with the above commands, then you should run them as root (with sudo)
+> If you encounter issues with the above commands, then you should run them as root
 
 
 ## Windows
@@ -53,8 +46,8 @@ export PATH=$PATH:/path/to/downloaded/geckodriver
 facebook_downloader <video-url>
 ```
 
-### Note
-> Upon run, the program will first check for updates. If found, users will be notified about the update
+## Note
+> The url format should be as follows; https://www.facebook.com/PageName/videos/VideoID
 
 
 # Optional Arguments
