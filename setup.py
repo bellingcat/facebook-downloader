@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as file:
 
 setuptools.setup(
     name='facebook-downloader',
-    version='2022.1.2.0',
+    version='2022.1.2.1',
     author='Richard Mwewa',
     author_email='rly0nheart@duck.com',
     packages=['facebook_downloader'],
