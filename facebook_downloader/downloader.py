@@ -66,9 +66,7 @@ class FacebookDownloader:
 
 
     def path_finder(self):
-        directory_list = [os.path.join('downloads', 'videos'), os.path.join('downloads', 'audio')]
-        for directory in directory_list:
-            os.makedirs(directory, exist_ok=True)
+        os.makedirs("downloads", exist_ok=True)
             
     
     def download_video(self):
@@ -86,7 +84,7 @@ class FacebookDownloader:
         
         with requests.get(download_url, stream=True) as response:
             response.raise_for_status()
-            with open(os.path.join('downloads', 'videos', f'{self.args.output}.mp4'), 'wb') as file:
+            with open(os.path.join('downloads', f'{self.args.output}.mp4'), 'wb') as file:
                 for chunk in tqdm(response.iter_content(chunk_size=8192), desc=f'Downloading: {self.args.output}.mp4'):
                     file.write(chunk)
                 print(f'Downloaded: {file.name}')
