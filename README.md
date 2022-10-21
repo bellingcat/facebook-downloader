@@ -1,5 +1,8 @@
 # Facebook Downloader
 
+[![Upload Python Package](https://github.com/rly0nheart/facebook-downloader/actions/workflows/python-publish.yml/badge.svg)](https://github.com/rly0nheart/facebook-downloader/actions/workflows/python-publish.yml)
+[![CodeQL](https://github.com/rly0nheart/facebook-downloader/actions/workflows/codeql.yml/badge.svg)](https://github.com/rly0nheart/facebook-downloader/actions/workflows/codeql.yml)
+
 A program for downloading videos from facebook, given a video url
 
 # Installation
