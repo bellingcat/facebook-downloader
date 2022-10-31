@@ -12,9 +12,14 @@ pip install facebook-downloader
 ```
 
 ### Note
-> You will need to have the FireFox browser installed on your pc
+> You will need to have the FireFox browser installed on your pc (for the PyPI Package)
 >> The program is dependent on selenium, so in order to run it, you will have to download and properly setup geckodriver (setup instructions available below)
 
+# Docker
+** Pull the image**
+```
+docker pull rly0nheart/facebookdl:facebookdl
+```
 # Geckodriver setup
 ## Linux
 **1. Go to the geckodriver [releases page](https://github.com/mozilla/geckodriver/releases/). Find the latest version of the driver for your platform and download it**
@@ -49,6 +54,10 @@ export PATH=$PATH:/path/to/downloaded/geckodriver
 facebook_downloader <video-url>
 ```
 
+# Docker
+```
+ docker run -it -v $PWD/downloads:/app/downloads facebookdl <facebook_url>
+```
 ## Note
 > The url format should be as follows; https://www.facebook.com/PageName/videos/VideoID
 
