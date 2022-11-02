@@ -16,7 +16,7 @@ pip install facebook-downloader
 >> The program is dependent on selenium, so in order to run it, you will have to download and properly setup geckodriver (setup instructions available below)
 
 # Docker
-** Pull the image**
+**Pull the image**
 ```
 docker pull rly0nheart/facebookdl:facebookdl
 ```
