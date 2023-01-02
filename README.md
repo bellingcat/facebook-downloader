@@ -16,7 +16,7 @@ pip install facebook-downloader
 # Docker
 ## Pull the image
 ```
-docker pull rly0nheart/facebookdl:facebookdl
+docker pull rly0nheart/facebook-downloader:facebook-downloader
 ```
 # Geckodriver setup
 ## Linux
@@ -54,7 +54,7 @@ facebook_downloader <video-url>
 
 # Docker
 ```
- docker run -it -v $PWD/downloads:/app/downloads facebookdl <facebook_url>
+ docker run -it -v $PWD/downloads:/app/downloads facebook-downloader <facebook_url>
 ```
 ## Note
 > The url format should be as follows; https://www.facebook.com/PageName/videos/VideoID
