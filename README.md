@@ -1,12 +1,10 @@
-# Facebook Downloader
-
 [![Upload Python Package](https://github.com/rly0nheart/facebook-downloader/actions/workflows/python-publish.yml/badge.svg)](https://github.com/rly0nheart/facebook-downloader/actions/workflows/python-publish.yml)
 [![CodeQL](https://github.com/rly0nheart/facebook-downloader/actions/workflows/codeql.yml/badge.svg)](https://github.com/rly0nheart/facebook-downloader/actions/workflows/codeql.yml)
 
 A program for downloading videos from facebook, given a video url
 
 # Installation
-**Install from PyPI**
+## Install from PyPI
 ```
 pip install facebook-downloader
 ```
@@ -16,7 +14,7 @@ pip install facebook-downloader
 >> The program is dependent on selenium, so in order to run it, you will have to download and properly setup geckodriver (setup instructions available below)
 
 # Docker
-**Pull the image**
+## Pull the image
 ```
 docker pull rly0nheart/facebookdl:facebookdl
 ```
