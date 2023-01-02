@@ -21,24 +21,23 @@ class FacebookDownloader:
         option.add_argument('--headless')
         self.driver = webdriver.Firefox(options=option)
 
-        self.program_version_number = "2022.1.2.1"
+        self.program_version_number = "1.3.1"
         self.downloading_url = "https://getfvid.com"
         self.update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
         
         
     def notice(self):
-        notice_msg = f"""
-        facebook-downloader {self.program_version_number} Copyright (C) 2023  Richard Mwewa
+        return f"""
+        facebook-downloader v{self.program_version_number} Copyright (C) 2023  Richard Mwewa
         
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
         """
-        print(notice_msg)
         
         
     def check_updates(self):
-        self.notice()
+        print(self.notice())
         response = requests.get(self.update_check_endpoint).json()
         if response['tag_name'] == self.program_version_number:
             """Ignore if the program is up to date"""
@@ -76,8 +75,8 @@ class FacebookDownloader:
         url_entry_field = self.driver.find_element(By.NAME, "url") # Find the url entry field
         url_entry_field.send_keys(self.args.url) # write facebook url in the entry field
         url_entry_field.send_keys(Keys.ENTER) # press enter
-        print('Please standby (20 seconds)...')
-        self.driver.refresh
+        print('[INFO] Loading web resource, please wait...')
+        # self.driver.refresh
         
         download_btn = WebDriverWait(self.driver, 20).until(expected_conditions.presence_of_element_located((By.XPATH, self.download_type()))) # Find the download button (this clicks the first button which returns a video in hd)
         download_url = download_btn.get_attribute('href')
