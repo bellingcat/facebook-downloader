@@ -6,7 +6,7 @@ def main():
         start.download_video()
         
     except KeyboardInterrupt:
-        print('Process interrupted with Ctrl+C.')
+        print('[WARNING] Process interrupted with Ctrl+C.')
 
     except Exception as e:
-        print('An error occured:', e)
+        print('[ERROR] An error occurred:', e)
