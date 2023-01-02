@@ -28,7 +28,7 @@ class FacebookDownloader:
         
     def notice(self):
         notice_msg = f"""
-        facebook-downloader {self.program_version_number} Copyright (C) 2022  Richard Mwewa
+        facebook-downloader {self.program_version_number} Copyright (C) 2023  Richard Mwewa
         
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ class FacebookDownloader:
             """Ignore if the program is up to date"""
             pass
         else:
-            print(f"[!] A new release is available ({response['tag_name']}). Run 'pip install --upgrade facebook-downloader' to get the updates.")
+            print(f"[UPDATE] A new release is available ({response['tag_name']}). Run 'pip install --upgrade facebook-downloader' to get the updates.")
 
     
     def download_type(self):
@@ -85,8 +85,8 @@ class FacebookDownloader:
         with requests.get(download_url, stream=True) as response:
             response.raise_for_status()
             with open(os.path.join('downloads', f'{self.args.output}.mp4'), 'wb') as file:
-                for chunk in tqdm(response.iter_content(chunk_size=8192), desc=f'Downloading: {self.args.output}.mp4'):
+                for chunk in tqdm(response.iter_content(chunk_size=8192), desc=f'[INFO] Downloading: {self.args.output}.mp4'):
                     file.write(chunk)
-                print(f'Downloaded: {file.name}')
+                print(f'[INFO] Downloaded: {file.name}')
         self.driver.close()
         
