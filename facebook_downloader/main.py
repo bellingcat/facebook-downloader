@@ -9,4 +9,4 @@ def main():
         print('[WARNING] Process interrupted with Ctrl+C.')
 
     except Exception as e:
-        print('[ERROR] An error occurred:', e)
+        print('[ERROR]', e)
