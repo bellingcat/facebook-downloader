@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "facebook-downloader"
+version = "1.4.0"
+description = "A Facebook video downloader."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+dependencies = ["tqdm", "requests", "selenium"]
+keywords = ["searchcode", "search-engine", "codesearch", "api-wrapper"]
+authors = [{name = "Richard Mwewa", email = "rly0nheart@duck.com"}]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Information Technology",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Operating System :: OS Independent",
+  "Natural Language :: English",
+]
+
+[tool.setuptools]
+packages = ["facebook_downloader"]
+
+[project.urls]
+homepage = "https://www.bellingcat.com"
+documentation = "https://github.com/bellingcat/facebook-downloader/wiki"
+repository = "https://github.com/bellingcat/facebook-downloader"
+
+[project.scripts]
+facebook_downloader = "facebook_downloader.main:run"

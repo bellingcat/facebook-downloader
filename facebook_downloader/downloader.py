@@ -1,91 +1,144 @@
 import os
-import argparse
 import requests
+import argparse
 from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
- 
+
 
 class FacebookDownloader:
     def __init__(self):
-        parser = argparse.ArgumentParser(description='facebook-downloader — by Richard Mwewa')
-        parser.add_argument('url', help='facebook video url (eg. https://www.facebook.com/PageName/videos/VideoID')
+        self.__program_version_number = "1.4.0"
+        self.__base_url = "https://getfvid.com"
+        self.__update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
+        self.__home_directory = os.path.expanduser("~")
+        self.__downloads_directory = os.path.join(self.__home_directory, "facebook-videos")
+
+        __option = webdriver.FirefoxOptions()
+        __option.add_argument('--headless')
+        self.__driver = webdriver.Firefox(options=__option)
+
+        parser = argparse.ArgumentParser(description='facebook-downloader — by Richard Mwewa',
+                                         epilog='Facebook video downloader.')
+        parser.add_argument('url', help='facebook video url')
         parser.add_argument('-a', '--audio', help='download file as audio', action='store_true')
-        parser.add_argument('-o', '--output', help='output filename')
-        self.args = parser.parse_args()
+        parser.add_argument('-o', '--output', help='output filename', default="")
+        parser.add_argument('-v', '--version', action='version', version=self.__program_version_number)
+        self.__args = parser.parse_args()
 
-        option = webdriver.FirefoxOptions()
-        option.add_argument('--headless')
-        self.driver = webdriver.Firefox(options=option)
+    @staticmethod
+    def __format_output_filename(user_defined_name) -> str:
+        """
+        Formats the output file's name.
 
-        self.program_version_number = "1.3.1"
-        self.downloading_url = "https://getfvid.com"
-        self.update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
-        
-        
-    def notice(self):
+        :param user_defined_name: User-defined name for the file.
+        :return: Formatted/Reconstructed name of the file.
+        """
+        from datetime import datetime
+
+        dt_now = datetime.now()
+        if os.name == "nt":
+            output_name = dt_now.strftime(f"{user_defined_name}_%d-%m-%Y %I-%M-%S%p-facebook-downloader.mp4")
+        else:
+            output_name = dt_now.strftime(f"{user_defined_name}_%d-%m-%Y %I:%M:%S%p-facebook-downloader.mp4")
+
+        return output_name
+
+    def notice(self) -> str:
+        """
+        Returns the program's license notice and current version.
+
+        :return: License notice.
+        :rtype: str
+        """
         return f"""
-        facebook-downloader v{self.program_version_number} Copyright (C) 2023  Richard Mwewa
+        facebook-downloader v{self.__program_version_number} Copyright (C) 2023  Richard Mwewa
         
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
         """
-        
-        
-    def check_updates(self):
-        print(self.notice())
-        response = requests.get(self.update_check_endpoint).json()
-        if response['tag_name'] == self.program_version_number:
-            """Ignore if the program is up to date"""
-            pass
-        else:
-            print(f"[UPDATE] A new release is available ({response['tag_name']}). Run 'pip install --upgrade facebook-downloader' to get the updates.")
 
-    
-    def download_type(self):
+    def check_updates(self) -> None:
         """
-        The elements change according to what file type will be downloaded
-        So, we pass an option to specify what file type we want, by default the file is an HD video
+        Checks if the program's version tag matches the tag of the latest release on GitHub.
+        If the tags match, assume the program is up-to-date.
+
+        :return: None
         """
+        with requests.get(self.__update_check_endpoint) as response:
+            if response.json()['tag_name'] != self.__program_version_number:
+                print(f"* A new release is available -> facebook-downloader v{response.json()['tag_name']}.\n"
+                      f"* Run 'pip install --upgrade facebook-downloader' to get the updates.\n")
+            else:
+                pass
+
+    def __get_download_type_element(self) -> str:
         """
-        HD: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a"
-        SD: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[2]/a"
-        Audio: "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a"
+        Gets the web element according to the specified command-line arguments.
+
+        HD: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a
+
+        SD: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[2]/a
+
+        Audio: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a
+
+        :return: Web element
         """
-        if self.args.audio:
+        if self.__args.audio:
             download_type_element = "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a"
         else:
             download_type_element = "/html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a"
-        
+
         return download_type_element
 
+    def path_finder(self) -> None:
+        """
+        Creates the facebook-videos directory.
 
-    def path_finder(self):
-        os.makedirs("downloads", exist_ok=True)
-            
-    
+        :return: None
+        """
+        # Construct and create the directory if it doesn't already exist
+        os.makedirs(os.path.join(self.__home_directory, "facebook-videos"), exist_ok=True)
+
     def download_video(self):
-        self.path_finder()
-        self.check_updates()
-        self.driver.get(self.downloading_url) # Opening getfvid.com, a website that downloads facebook videos
-        url_entry_field = self.driver.find_element(By.NAME, "url") # Find the url entry field
-        url_entry_field.send_keys(self.args.url) # write facebook url in the entry field
-        url_entry_field.send_keys(Keys.ENTER) # press enter
-        print('[INFO] Loading web resource, please wait...')
-        # self.driver.refresh
-        
-        download_btn = WebDriverWait(self.driver, 20).until(expected_conditions.presence_of_element_located((By.XPATH, self.download_type()))) # Find the download button (this clicks the first button which returns a video in hd)
+        """
+        Opens https://getfvid.com with selenium and uses the specified facebook video link as a query.
+
+        :return:
+        """
+        # Open the base url.
+        self.__driver.get(self.__base_url)
+
+        # Locate the facebook video url entry field.
+        url_entry_field = self.__driver.find_element(By.NAME, "url")
+
+        # Write the given facebook video url in the entry field.
+        url_entry_field.send_keys(self.__args.url)
+
+        # Press ENTER.
+        url_entry_field.send_keys(Keys.ENTER)
+        print("* Loading web resources... Please wait.")
+
+        # Find the download button (this clicks the first button which returns a video in hd).
+        download_btn = WebDriverWait(self.__driver, 20).until(
+            expected_conditions.presence_of_element_located((By.XPATH,
+                                                             self.__get_download_type_element())))
+        # Get the video download url from the download button.
         download_url = download_btn.get_attribute('href')
-        
+
+        # Open the download url and stream the content to a file.
         with requests.get(download_url, stream=True) as response:
             response.raise_for_status()
-            with open(os.path.join('downloads', f'{self.args.output}.mp4'), 'wb') as file:
-                for chunk in tqdm(response.iter_content(chunk_size=8192), desc=f'[INFO] Downloading: {self.args.output}.mp4'):
+            with open(os.path.join(self.__downloads_directory,
+                                   self.__format_output_filename(self.__args.output)), 'wb') as file:
+                for chunk in tqdm(response.iter_content(chunk_size=8192),
+                                  desc=f"* Downloading: {file.name}"):
                     file.write(chunk)
-                print(f'[INFO] Downloaded: {file.name}')
-        self.driver.close()
-        
+                print(f"* Downloaded: {file.name}")
+
+        # Close driver.
+        self.__driver.close()

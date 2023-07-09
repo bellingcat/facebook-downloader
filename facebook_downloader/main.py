@@ -1,12 +1,25 @@
 from facebook_downloader.downloader import FacebookDownloader
 
-def main():
+
+def run():
     try:
-        start = FacebookDownloader()
-        start.download_video()
-        
+        # Initialise the FaceBookDownloader instance.
+        program = FacebookDownloader()
+
+        # Create directory where downloaded videos will be stored.
+        program.path_finder()
+
+        # Print program's license notice.
+        print(program.notice())
+
+        # Check for latest releases.
+        program.check_updates()
+
+        # Start video download.
+        program.download_video()
+
     except KeyboardInterrupt:
-        print('[WARNING] Process interrupted with Ctrl+C.')
+        print("Process interrupted with Ctrl+C.")
 
     except Exception as e:
-        print('[ERROR]', e)
+        print(f"An error occurred: {e}")
