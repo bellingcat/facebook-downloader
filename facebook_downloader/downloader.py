@@ -72,7 +72,7 @@ class FacebookDownloader:
         with requests.get(self.__update_check_endpoint) as response:
             if response.json()['tag_name'] != self.__program_version_number:
                 print(f"* A new release is available -> facebook-downloader v{response.json()['tag_name']}.\n"
-                      f"* Run 'pip install --upgrade facebook-downloader' to get the updates.")
+                      f"* Run 'pip install --upgrade facebook-downloader' to get the updates.\n")
             else:
                 pass
 
@@ -121,7 +121,7 @@ class FacebookDownloader:
 
         # Press ENTER.
         url_entry_field.send_keys(Keys.ENTER)
-        print("Loading web resources... Please wait.")
+        print("* Loading web resources... Please wait.")
 
         # Find the download button (this clicks the first button which returns a video in hd).
         download_btn = WebDriverWait(self.__driver, 20).until(
@@ -136,9 +136,9 @@ class FacebookDownloader:
             with open(os.path.join(self.__downloads_directory,
                                    self.__format_output_filename(self.__args.output)), 'wb') as file:
                 for chunk in tqdm(response.iter_content(chunk_size=8192),
-                                  desc=f"Downloading: {file.name}"):
+                                  desc=f"* Downloading: {file.name}"):
                     file.write(chunk)
-                print(f"Downloaded: {file.name}")
+                print(f"* Downloaded: {file.name}")
 
         # Close driver.
         self.__driver.close()
