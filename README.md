@@ -55,10 +55,8 @@ facebook_downloader <video-url>
 
 # Docker
 ```
- docker run -it -v $PWD/downloads:/app/downloads facebook-downloader <facebook_url>
+ docker run -it -v $PWD/downloads:/app/downloads facebook-downloader <facebook_video_url>
 ```
-## Note
-> The url format should be as follows; https://www.facebook.com/PageName/videos/VideoID
 
 
 # Optional Arguments
