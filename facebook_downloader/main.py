@@ -1,7 +1,7 @@
 from facebook_downloader.downloader import FacebookDownloader
 
 
-def run():
+def start_downloader():
     try:
         # Initialise the FaceBookDownloader instance.
         program = FacebookDownloader()
