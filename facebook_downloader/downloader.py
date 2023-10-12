@@ -8,10 +8,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
+from . import __version__, __author__
+
 
 class FacebookDownloader:
     def __init__(self):
-        self.__program_version_number = "1.4.0"
         self.__base_url = "https://getfvid.com"
         self.__update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
         self.__home_directory = os.path.expanduser("~")
@@ -21,12 +22,12 @@ class FacebookDownloader:
         __option.add_argument('--headless')
         self.__driver = webdriver.Firefox(options=__option)
 
-        parser = argparse.ArgumentParser(description='facebook-downloader — by Richard Mwewa',
+        parser = argparse.ArgumentParser(description=f'facebook-downloader — by {__author__}',
                                          epilog='Facebook video downloader.')
         parser.add_argument('url', help='facebook video url')
         parser.add_argument('-a', '--audio', help='download file as audio', action='store_true')
         parser.add_argument('-o', '--output', help='output filename', default="")
-        parser.add_argument('-v', '--version', action='version', version=self.__program_version_number)
+        parser.add_argument('-v', '--version', action='version', version=__version__)
         self.__args = parser.parse_args()
 
     @staticmethod
@@ -55,36 +56,34 @@ class FacebookDownloader:
         :rtype: str
         """
         return f"""
-        facebook-downloader v{self.__program_version_number} Copyright (C) 2023  Richard Mwewa
+        facebook-downloader v{__version__} Copyright (C) 2022-2023  Richard Mwewa
         
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
         """
 
-    def check_updates(self) -> None:
+    def check_updates(self):
         """
         Checks if the program's version tag matches the tag of the latest release on GitHub.
         If the tags match, assume the program is up-to-date.
-
-        :return: None
         """
         with requests.get(self.__update_check_endpoint) as response:
-            if response.json()['tag_name'] != self.__program_version_number:
-                print(f"* A new release is available -> facebook-downloader v{response.json()['tag_name']}.\n"
+            remote_version = response.json().get('tag_name')
+            if remote_version != __version__:
+                print(f"* A new release is available -> facebook-downloader v{remote_version}.\n"
                       f"* Run 'pip install --upgrade facebook-downloader' to get the updates.\n")
-            else:
-                pass
 
     def __get_download_type_element(self) -> str:
         """
         Gets the web element according to the specified command-line arguments.
+        
 
-        HD: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a
-
-        SD: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[2]/a
-
-        Audio: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a
+        ELements
+        --------
+        - HD: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[1]/a
+        - SD: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[2]/a
+        - Audio: /html/body/div[2]/div/div/div[1]/div/div[2]/div/div[3]/p[3]/a
 
         :return: Web element
         """
@@ -102,13 +101,11 @@ class FacebookDownloader:
         :return: None
         """
         # Construct and create the directory if it doesn't already exist
-        os.makedirs(os.path.join(self.__home_directory, "facebook-videos"), exist_ok=True)
+        os.makedirs(os.path.join(self.__home_directory, "facebook-downloader"), exist_ok=True)
 
     def download_video(self):
         """
         Opens https://getfvid.com with selenium and uses the specified facebook video link as a query.
-
-        :return:
         """
         # Open the base url.
         self.__driver.get(self.__base_url)
