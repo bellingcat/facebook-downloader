@@ -11,42 +11,41 @@ pip install facebook-downloader
 ```
 
 ### Note
-> You will need to have the FireFox browser installed on your pc (for the PyPI Package)
->> The program is dependent on selenium, so in order to run it, you will have to download and properly setup geckodriver (setup instructions available below)
+> You will need to have the FireFox browser installed on your pc.
 
 # Docker
-## Pull the image
+## Build the container
 ```
-docker pull rly0nheart/facebook-downloader:facebook-downloader
+docker build -t my-facebook-downloader .
 ```
+
 # Geckodriver setup
+> This assumes you've cloned the repository with `git clone https://github.com/bellingcat/facebook-downloader`
 ## Linux
-**1. Go to the geckodriver [releases page](https://github.com/mozilla/geckodriver/releases/). Find the latest version of the driver for your platform and download it**
-
-**2. Extract the downloaded file**
+**1.** Navigate to the facebook-downloader directory
 ```
-tar -xvzf geckodriver*
-```
-**3. Add geckodriver to your system path**
-```
-export PATH=$PATH:/path/to/downloaded/geckodriver
+cd facebook-downloader
 ```
 
-### Note
-> If you encounter issues with the above commands, then you should run them as root
+**2.** Find the `install.sh` script and run it
+```
+./install.sh
+```
+> This assumes the script was already made executable with the `chmod +x uninstall.sh` command.
+
 
 
 ## Windows
-**1. Go to the geckodriver [releases page](https://github.com/mozilla/geckodriver/releases/). Find the geckodriver.exe binary for your platform and download it**
+**1.** Navigate to the facebook-downloader directory
+```
+cd facebook-downloader
+```
 
-**2. Move the downloaded executable to** *C:\Users\yourusername\AppData\Local\Programs\Python\Python310*
-
-### Note
-> The numbers on the directory 'Python310' will depend on the version of Python you have
-
-## Mac OS
-* [Set up Selenium & GeckoDriver (Mac)](https://medium.com/dropout-analytics/selenium-and-geckodriver-on-mac-b411dbfe61bc)
-
+**2.** Find the `install.ps1` script and run it
+```
+.\install.ps1
+```
+> The installation scripts will download and setup geckodriver, then install **facebook-downloader**.
 
 # Usage
 ```
@@ -55,7 +54,7 @@ facebook_downloader <video-url>
 
 # Docker
 ```
- docker run -it -v $PWD/downloads:/app/downloads facebook-downloader <facebook_video_url>
+ docker run --tty --volume $PWD/downloads:/app/downloads my-facebook-downloader <facebook_video_url>
 ```
 
 
@@ -68,6 +67,6 @@ facebook_downloader <video-url>
 # Donations
 If you would like to donate, you could Buy A Coffee for the developer using the button below
 
-<a href="https://www.buymeacoffee.com/189381184" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<a href="https://www.buymeacoffee.com/_rly0nheart"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=_rly0nheart&button_colour=40DCA5&font_colour=ffffff&font_family=Comic&outline_colour=000000&coffee_colour=FFDD00" /></a>
 
 Your support will be much appreciated!

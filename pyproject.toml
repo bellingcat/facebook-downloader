@@ -25,9 +25,9 @@ classifiers = [
 packages = ["facebook_downloader"]
 
 [project.urls]
-homepage = "https://www.bellingcat.com"
+homepage = "https://pypi.org/project/facebook-downloader"
 documentation = "https://github.com/bellingcat/facebook-downloader/wiki"
 repository = "https://github.com/bellingcat/facebook-downloader"
 
 [project.scripts]
-facebook_downloader = "facebook_downloader.main:run"
+facebook_downloader = "facebook_downloader.main:start_downloader"
