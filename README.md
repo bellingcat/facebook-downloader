@@ -9,8 +9,6 @@ A program for downloading videos from Facebook, given a video url
 ```
 pip install facebook-downloader
 ```
-
-### Note
 > You will need to have the FireFox browser installed and geckodriver properly set up.
 
 ## Building from source
