@@ -9,25 +9,27 @@ A program for downloading videos from Facebook, given a video url
 ```
 pip install facebook-downloader
 ```
+> You will need to have the FireFox browser installed and geckodriver properly set up.
 
-### Note
-> You will need to have the FireFox browser installed on your pc.
-
-# Docker
-## Build the container
+## Building from source
+**1.** Clone the repository
 ```
-docker build -t my-facebook-downloader .
+git clone https://github.com/bellingcat/facebook-downloader
 ```
 
-# Geckodriver setup
-> This assumes you've cloned the repository with `git clone https://github.com/bellingcat/facebook-downloader`
-## Linux
-**1.** Navigate to the facebook-downloader directory
+**2.** Navigate to the cloned repository
 ```
 cd facebook-downloader
 ```
 
-**2.** Find the `install.sh` script and run it
+### Building the Docker container
+```
+docker build --tty my-facebook-downloader .
+```
+
+### Building the facebook-downloader package
+#### Linux
+Find the `install.sh` script and run it
 ```
 ./install.sh
 ```
@@ -35,24 +37,21 @@ cd facebook-downloader
 
 
 
-## Windows
+#### Windows
 **1.** Navigate to the facebook-downloader directory
-```
-cd facebook-downloader
-```
-
-**2.** Find the `install.ps1` script and run it
+Find the `install.ps1` script and run it
 ```
 .\install.ps1
 ```
 > The installation scripts will download and setup geckodriver, then install **facebook-downloader**.
 
 # Usage
+## Package
 ```
 facebook_downloader <video-url>
 ```
 
-# Docker
+## Docker
 ```
  docker run --tty --volume $PWD/downloads:/app/downloads my-facebook-downloader <facebook_video_url>
 ```
