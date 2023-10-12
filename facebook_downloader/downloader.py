@@ -16,7 +16,7 @@ class FacebookDownloader:
         self.__base_url = "https://getfvid.com"
         self.__update_check_endpoint = "https://api.github.com/repos/rly0nheart/facebook-downloader/releases/latest"
         self.__home_directory = os.path.expanduser("~")
-        self.__downloads_directory = os.path.join(self.__home_directory, "facebook-videos")
+        self.__downloads_directory = os.path.join(self.__home_directory, "facebook-downloader")
 
         __option = webdriver.FirefoxOptions()
         __option.add_argument('--headless')
